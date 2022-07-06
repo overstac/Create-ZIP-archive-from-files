@@ -1,10 +1,9 @@
 from pathlib import Path
+import zipfile
 
-root_dir = Path("files")
-file_paths= root_dir.iterdir()
+root_dir= Path("files")
+archive_path= root_dir/ Path("archive.zip")
 
-for path in file_paths:
-  new_filename= "new-" + path.stem + path.suffix
-  new_filepath = path.with_name(new_filename)
-  print(new_filepath)
-  path.rename(new_filepath)
+with zipfile.ZipFile(archive_path, "w") as zf:
+  for path in root_dir.rglob("*.txt"):
+    zf.write(path) ///folosim path.unlink() = atunci cand dorim sa stergem ce a intrat in zip
